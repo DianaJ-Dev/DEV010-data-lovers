@@ -1,14 +1,48 @@
-import { example, filtrarIdioma } from './data.js';
+import { example, filtrarData } from './data.js';
 import data from './data/countries/countries.js';
 
 console.log(example, data);
+ 
+//Capturar infirmacion//
+// Mostrar en Lista desplegable la información
+const opcionSeleccionada = document.getElementById("opciones"); 
+
+opcionSeleccionada.addEventListener("change",function(){
+
+  const valorSeleccionado= opcionSeleccionada.value;
+  if(valorSeleccionado==="limitantes"){
+    document.getElementById("limitesForm").style.display="block";
+    document.getElementById("areaForm").style.display="none";
+    document.getElementById("idiomaForm").style.display="none";
+  
+  }
+  else if(valorSeleccionado==="idioma"){
+    document.getElementById("idiomaForm").style.display="block";
+    document.getElementById("areaForm").style.display="none";
+    document.getElementById("limitesForm").style.display="none";
+
+    function volverInicio(){
+      document.getElementById('opciones').style.display = "block";
+      document.getElementById('idiomaForm').style.display = "none"; 
+    }
+  }
+  else if(valorSeleccionado==="calculo"){
+    document.getElementById("areaForm").style.display="block";
+    document.getElementById("idiomaForm").style.display="none";
+    document.getElementById("limitesForm").style.display="none";
+
+    function volverInicio(){
+      document.getElementById('opciones').style.display = "block";
+      document.getElementById('areaForm').style.display = "none"; 
+    }
+  }
+  
+})
 
 // me trae de la data nombre y banderas
 const root = document.getElementById('root');
 
-
 //movimiento de las banderas 
-
 
 function pintarData (data){
   let contentRootInfo = '';
@@ -19,7 +53,7 @@ function pintarData (data){
   
         contentRootInfo += `<div class="bandera-container">
             <div class="bandera-wrapper">
-                <img src="${country.flags.png}" class="Bandera" id="bandera-${i}">
+                <img src="${country.flags.png}" class="Bandera" id="bandera-${i}"/>
                 <h4>${country.name.common}</h4> 
             </div>
             <div class="info-back">
@@ -61,7 +95,7 @@ banderaImages.forEach(image => {
 const  btnLimites = document.getElementById('limitantes'); // paises limitantes 
 
 btnLimites.addEventListener("click", function () { // Activo la funcion del botones
-  const inputPais = document.getElementById('input'); // Traigo el inpu que se creo para colocar el nombre 
+  const inputPais = document.getElementById('input1'); // Traigo el inpu que se creo para colocar el nombre 
   let banderasLimitantes = ''; // Variable con cadena de texto vacia 
   for (let i= 0; i<data.countries.length; i++) { // Este for es para que me busque la palabra que coloque en la data
     if(data.countries[i].name.common== inputPais.value) { //Se hace el recorrido cuando sea el mismo nombre lo debe traer 
@@ -72,7 +106,7 @@ btnLimites.addEventListener("click", function () { // Activo la funcion del boto
         for (let k= 0; k<data.countries.length; k++) {  // Este for me trae la imagen de la badera con el nombre 
           if(borders[j] === data.countries[k].fifa) { // si los bordes son iguales a lo que tengo en la data me traiga imagenes
               banderasLimitantes += `<div class="bandera-wrapper"> 
-              <img src="${data.countries[k].flags.png}" class="Bandera" 
+              <img src="${data.countries[k].flags.png}" class="Bandera" />
               <h4>${data.countries[k].name.common}</h4> 
              </div>`;   
           }
@@ -86,34 +120,18 @@ btnLimites.addEventListener("click", function () { // Activo la funcion del boto
 // Boton de filtro Idioma 
 
   const btnIdioma = document.getElementById('idioma')
-  let banderasByIdioma = '';
-
   btnIdioma.addEventListener('click',function () {
-    const inputIdioma = document.getElementById('input');
-    console.log(filtrarIdioma(data.countries, inputIdioma))
-    const dataFiltradaPorIdioma = filtrarIdioma(data.countries, inputIdioma)
-    pintarData(dataFiltradaPorIdioma)
-    // for (let i=0; i<data.countries.length; i++){
-    //   let lenguajes = data.countries[i].languages;
-    //   for(const key in lenguajes) {
-    //     if(lenguajes[key]=== inputIdioma.value) {
-    //       banderasByIdioma += `<div class="bandera-wrapper"> 
-    //           <img src="${data.countries[i].flags.png}" class="Bandera" 
-    //           <h4>${data.countries[i].name.common}</h4> 
-    //          </div>`;
-    //     }
-    //   }    
-    // }
-    // root.innerHTML = banderasByIdioma;
-  })
+    const inputIdioma = document.getElementById('input2').value;
+    const dataFiltradaPorIdioma = filtrarData(data.countries, inputIdioma);
+    pintarData(dataFiltradaPorIdioma);
+  }) 
 
-
-/*calcular área entre dos paises
+//calcular área entre dos paises
 
 const Resultado =document.getElementById ('Resultado') 
 const areaForm = document.getElementById('areaForm');
 
-Resultado.addEventListener("Click", function(Event) {
+Resultado.addEventListener("click", function(Event) {
 Event.preventDefault() ;
 
 
@@ -134,13 +152,4 @@ for (let i = 0; i < data.countries.length; i++) {
 const totalArea = area1 * areaCountry1 + area2 * areaCountry2;
 
 Resultado.textContent = `Área total: ${totalArea} km²`;
-});*/
-    
-
-  
-
-   
-
-
-  
-
+});
