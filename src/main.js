@@ -1,4 +1,6 @@
-import { example, filtrarData } from './data.js';
+import { example, filtrarIdioma, ordenarAZ, filtrarPaisesLimitantes, calcularArea } from './data.js'; //aqui se agrego ordenar de AZ para darle funcionalidad al boton desde data.js
+//import { example, filtrarDataLimites} from './data.js';
+
 import data from './data/countries/countries.js';
 
 console.log(example, data);
@@ -42,7 +44,7 @@ opcionSeleccionada.addEventListener("change",function(){
 // me trae de la data nombre y banderas
 const root = document.getElementById('root');
 
-//movimiento de las banderas 
+//movimiento de las banderas  y  informacion trasera de las bandera 
 
 function pintarData (data){
   let contentRootInfo = '';
@@ -67,10 +69,6 @@ function pintarData (data){
     }
   }
   root.innerHTML=contentRootInfo;
-}
-pintarData(data.countries)
-
-
 
 const banderaImages = document.querySelectorAll('.Bandera');
 
@@ -88,68 +86,51 @@ banderaImages.forEach(image => {
     image.classList.remove('rotate');
   });
 });
+}
+pintarData(data.countries)
+
+// Botton 1 Organizar
+
+
+const buttonOrdenar = document.getElementById('button1'); // Obtén una referencia al botón de ordenar
+buttonOrdenar.addEventListener('click', () => { // Agrega un evento de clic al botón
+  const banderasOrdenadas = ordenarAZ(root.querySelectorAll('.bandera-container')); // Llama a la función ordenarAZ para ordenar las banderas de A a Z
+  root.innerHTML = '';// Elimina las banderas originales
+  banderasOrdenadas.forEach(bandera => { // Agrega las banderas ordenadas al root nuevamente
+    root.appendChild(bandera);
+  });
+});
+
 
 //Boton de filtros paises limitantes.
 
 // Debemos llamar las funciones que vamos a uctilizar 
-const  btnLimites = document.getElementById('limitantes'); // paises limitantes 
 
-btnLimites.addEventListener("click", function () { // Activo la funcion del botones
-  const inputPais = document.getElementById('input1'); // Traigo el inpu que se creo para colocar el nombre 
-  let banderasLimitantes = ''; // Variable con cadena de texto vacia 
-  for (let i= 0; i<data.countries.length; i++) { // Este for es para que me busque la palabra que coloque en la data
-    if(data.countries[i].name.common== inputPais.value) { //Se hace el recorrido cuando sea el mismo nombre lo debe traer 
-      let borders = data.countries[i].borders // Creo una variable que sea igual a la data segun lo que se requiera 
-
-      
-      for (let j= 0; j<borders.length; j++) {  // Este for me trae los bordes paises limites de cada pais 
-        for (let k= 0; k<data.countries.length; k++) {  // Este for me trae la imagen de la badera con el nombre 
-          if(borders[j] === data.countries[k].fifa) { // si los bordes son iguales a lo que tengo en la data me traiga imagenes
-              banderasLimitantes += `<div class="bandera-wrapper"> 
-              <img src="${data.countries[k].flags.png}" class="Bandera" />
-              <h4>${data.countries[k].name.common}</h4> 
-             </div>`;   
-          }
-        }
-      }
-    }
-  }
-  root.innerHTML = banderasLimitantes;
-  });
+const btnLimites = document.getElementById('limitantes');
+btnLimites.addEventListener('click', function () {
+  const inputPais = document.getElementById('input1');
+  const paisElegido = inputPais.value;
+  
+  
+  const paisesLimitantes = filtrarPaisesLimitantes(data, paisElegido);
+  pintarData(paisesLimitantes);
+});
 
 // Boton de filtro Idioma 
 
   const btnIdioma = document.getElementById('idioma')
   btnIdioma.addEventListener('click',function () {
     const inputIdioma = document.getElementById('input2').value;
-    const dataFiltradaPorIdioma = filtrarData(data.countries, inputIdioma);
+    const dataFiltradaPorIdioma = filtrarIdioma(data.countries, inputIdioma);
     pintarData(dataFiltradaPorIdioma);
   }) 
 
 //calcular área entre dos paises
-
-const Resultado =document.getElementById ('Resultado') 
-const areaForm = document.getElementById('areaForm');
-
-Resultado.addEventListener("click", function(Event) {
-Event.preventDefault() ;
-
-
-const  area1 = parseFloat(document.getElementById('area1').value);
-const  area2 = parseFloat(document.getElementById('area2').value);
-
-let areaCountry1 = 0;
-let areaCountry2 = 0;
-
-for (let i = 0; i < data.countries.length; i++) {
-  if (data.countries[i].name.common.toLowerCase() === inputPais.value.toLowerCase()) {
-    areaCountry1 = data.countries[i].area || 0; // Si no hay área, establecer a 0
-    break; // Salir del bucle una vez encontrado el país
-  }
-}
-
-// Calcular el total de áreas
-const totalArea = area1 * areaCountry1 + area2 * areaCountry2;
-
-Resultado.textContent = `Área total: ${totalArea} km²`;
-});
+  const btnCalcular = document.getElementById ('calcular')
+  btnCalcular.addEventListener('click',function(){
+  const inpuCalcular1 = document.getElementById('area1').value;
+  const inpuCalcular2 = document.getElementById('area2').value;
+  const sumaArea= calcularArea(data, inpuCalcular1,inpuCalcular2);
+  console.log(sumaArea)
+  alert('Area Total: '+ sumaArea)
+  })

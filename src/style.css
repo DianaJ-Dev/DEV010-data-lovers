@@ -82,21 +82,20 @@ h4{
 
 
 
-/* Consulta de medios para dispositivos móviles */
-@media (max-width: 767px) {
-    /* Estilos específicos para dispositivos móviles */
+@media (max-width: 768px)  { /* Estilos específicos para dispositivos móviles */
     h1 {
-        font-size: 24px;
-        margin: 20px;
+        font-size: 20px;
+        
     }
 
     header {
-        padding: 5px;
+        padding: 15px;
+        
     }
 
     header button {
-        margin: 5px 10px;
-        padding: 5px 10px;
+        margin: 10px 30px;
+        padding: 15px 15px;
     }
 }
 
@@ -106,9 +105,7 @@ h4{
     align-items: center; 
   }
 
-.nombres {
-    color: aqua;
-}
+
 
 /* Estilos para el contenedor envolvente de la bandera */
 .bandera-wrapper {
@@ -117,11 +114,6 @@ h4{
     align-items: center; 
 }
 
-/* Estilos para el formato de texto en la tarjeta trasera de información */
-.info-back{
-    height: 15%;
-    width: 15%;  /* Controla cómo se rompen las palabras en caso de que excedan el ancho */
-}
 
 .bandera-container.show-info {
     display: flex;
@@ -141,7 +133,7 @@ h4{
 
 .info-back {
     
-    height: 20%;  /*Alto de la tarjeta trasera en relación al contenedor envolvente */
+    height: 15%;  /*Alto de la tarjeta trasera en relación al contenedor envolvente */
     width: 15%;   /* Ancho de la tarjeta trasera en relación al contenedor envolvente */
     background-color: rgb(138, 177, 216);  /* Color de fondo de la tarjeta trasera */
     border-radius: 5px; /* Borde redondeado para la tarjeta trasera */
@@ -159,7 +151,12 @@ h4{
     white-space: nowrap; /* Evita que el texto se divida en varias líneas */
     overflow: visible; /* Oculta el texto que desborda el contenedor */
     text-overflow: ellipsis; /* Muestra "..." al final del texto que desborda */
-}  
+}
+ 
+.info-back{
+    white-space: normal ;  /* Controla cómo se manejan los espacios en blanco y saltos de línea */
+    word-break: break-all;  /* Controla cómo se rompen las palabras en caso de que excedan el ancho */
+}    
 
 /* Estilos para mostrar la información ampliada en la bandera (parte trasera) */
 .bandera-container.show-info .info-back {
@@ -175,7 +172,7 @@ h4{
 }
 
 .info-back p{
-    font-size: x-small;
+    font-size: 40%;
     line-height: 0.2;
 }
 

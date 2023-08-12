@@ -4,13 +4,15 @@
     <meta charset="utf-8">
     <title>Data Lovers </title>
     <link rel="stylesheet" href="style.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Etiqueta para controlar la escala en dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Etiqueta para controlar la escala en dispositivos móviles -->
   </head>
   <body> 
     <h1>
       <img src = "Imagenes/sudamerica.jpg" id="sudamerica">Cultura-travels</h1>
       
     <header>
+
+      <button id="button1">Ordenar de A a Z</button>
       
       <select id="opciones">
         <label for="opciones">seleccione una opcion</label>
@@ -18,6 +20,7 @@
         <option value="limitantes">Limites del pais</option>
         <option value="idioma">Filtra por idioma</option>
         <option value="calculo">Calcular area total</option>
+        
       </select>
       
       <form id="limitesForm" style="display: none;">
@@ -39,12 +42,11 @@
         <input type="text" id="area1" name="area1" placeholder="Nombre del país">
         <label for="vs">   vs   </label>
         <input type="text" id="area2" name="area2" placeholder="Nombre de país">
-        <button type="button" class="button">Calcular</button> 
+        <button type="button" id="calcular" class="button">Calcular</button> 
         <button type="volver" id="volver" class="button">Inicio</button>
-        <p id="Resultado"></p> 
+        
       </form>
        
-      <!--<button id="button1">Ordenar de A a Z</button>--> 
     </header>  
 
     
